@@ -1,1 +1,1 @@
-const num:number = 12;
+const str:string = '123'

@@ -38,10 +38,10 @@ let fn6 = (...item:[number,string]):Array<number>=>{
 
 // 函数重载
 // 使用重载定义多个 函数 的函数类型：
-
+// 好处：明确知道输入一个什么类型，输出是什么类型
 function toArray(val:number):number[];
 function toArray(val:string):string[];
-function toArray(val:number|string):number[]|string[]|void{
+function toArray(val:number|string):any{
   if(typeof val === 'number'){
     return val.toString().split('').map(item=>parseInt(item))
   }
