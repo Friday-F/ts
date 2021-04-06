@@ -102,4 +102,34 @@ console.log(cat.name)
 Cat.run()//子类可以继承父类的静态方法
 console.log(cat.drink)
 cat.drink = '喝水'
+
+
+// 抽象类 abstract
+// 抽象类是不能被实例化
+// 1.抽象类不能被实例化，只能被继承
+// 2.抽象类继承在抽象类中，可以不实现，表示属于该抽象类的一个方法，如果继承的非抽象类中，那么抽象类的方法必须需要实现//
+
+abstract class AnimalF{
+  public name!:string
+  public abstract age:number
+
+  constructor(name:string){
+    this.name = name;
+  }
+  public abstract sayHi():any
+  run(){
+    console.log('非抽象方法，不要子类实现、重写');
+  }
+}
+class Dog extends AnimalF{
+  public age!:number
+  // 子类必须实现父类的抽象方法
+  sayHi(){
+    console.log(this.name)
+  }
+}
+let dog = new Dog('dog')
+dog.run()
+dog.sayHi()
+
 export{}
