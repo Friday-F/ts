@@ -1,99 +1,37 @@
-// 泛型 是指在定义函数，接口或者类的时候，不预先指定具体的类型，而在使用的时候再指定类型的一种特性。
-
-function fn<T>(length:number,val:T):Array<T> {
-  let arr:T[] = [];
-  for(let i = 0;i<length;i++){
-    arr.push(val)
-  }
-  return arr;
-}
-let r = fn(3,'x')
-console.log(r)
-
-
-
-// 多个泛型
-function swap<T,K>(arr:[T,K]):[K,T] {
-  return [arr[1],arr[0]]
-}
-let w = swap([1,'a'])
-console.log(w)
-
-
-// interface Ifn1{
-//   <T,K>(arr:[T,K]):[K,T]
-// }
-// let fn1:Ifn1 = (arr)=>{
-//   return [arr[1],arr[0]]
-// }
-// fn1([1,2])
-
-interface Ifn1<T,K>{
-  (arr:[T,K]):[K,T]
+// 类型推断
+// 1.当赋值的时候进行推断
+let str = '123'; //不赋值就是any
+// 2.函数默认会进行推断，函数会根据右边的赋值推断出左边的类型
+// 3.返回值的推断
+let sum = (a:string,b:string):string=>{
+  return a+b
 }
 
-interface Iarr<T>{
-  [key:number]:T
+// 4.属性推断
+
+let shool = { //需要限制的时候添加类型
+  name:'1',
+  age:18
 }
-let fn1 = <T>(arr:Iarr<T>):Iarr<T>=>{
-  return [arr[1],arr[0]]
+let {name} = shool;
+
+
+interface Ishool{
+  name:string,
+  age:number
 }
-let a = fn1([1,2,'1'])
-console.log(a)
+// n:string
+type n = Ishool['name'] //取出属性需要使用[]
 
 
+//  typeof 类型反推
+// 反推出shool中的类型
+type myShool = typeof shool;
 
-// 泛型约束
-// extends泛型进行约束
-let sum = <T extends string>(a:T,b:T):T=>{
-  return (a+b) as T
-}
-sum<string>('1','2')
-
-interface Ilength{
-  length:number
+let a:myShool = {
+  name:'12',
+  age:1
 }
 
-// 必须要有length属性
-function getLength<T extends Ilength>(obj:T) {
-  return obj.length
-}
-getLength('abc')
 
-
-// 约束属性
-// keyof表示取对象的key属性
-let getVal = <T extends Object,K extends keyof T>(obj:T,key:K)=>{
-  return obj[key]
-}
-getVal({a:1,b:2},'a')
-
-
-type t1 = keyof string
-
-
-// 类
-class MyArray<T>{
-  public arr:T[] = []
-  add(val:T){
-    this.arr.push(val)
-  }
-  getMaxArray():T{
-    let max = this.arr[0];
-    for(let i = 0;i<this.arr.length;i++){
-      if(max<this.arr[i]){
-        max = this.arr[i]
-      }
-    }
-    return max
-  }
-  
-}
-let arr = new MyArray<number>()
-arr.add(1)
-arr.add(2)
-arr.add(3)
-
-
-
-export{}
+export {}
